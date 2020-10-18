@@ -1,4 +1,9 @@
 # 도커에서 서버 배포 쉽게 하려고 만든 도커 써-버
+## 코드 바로 실행하기
+```bash
+wget https://raw.githubusercontent.com/DevMoeWork/docker-server/master/install.sh && sh install.sh
+```
+
 ## 처음 설치하면 이걸 해야해요
 - 그냥 싹 다 가져다가 붙여요
 - mariadb와 php의 경우 한 서버에 많은 도커 파일이 들어가면 자원낭비가 심각하므로, 언젠가 다른 버전관리 저장소를 파서 관리할거에요.

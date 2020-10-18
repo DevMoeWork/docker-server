@@ -36,10 +36,7 @@ ARG WEB_USER_GID
 ARG WEB_USER_UID
 ARG WEB_USER_PASSWORD
 
-RUN groupadd -g ${WEB_USER_GID} www-group \
-&& usermod -g ${WEB_USER_GID} www-user \
-&& usermod -u ${WEB_USER_UID} www-user \
-&& echo "www-user:${WEB_USER_PASSWORD}" | chpasswd \
+RUN echo "www-user:${WEB_USER_PASSWORD}" | chpasswd \
 && a2dismod -f autoindex \
 && a2enconf security \
 && service apache2 restart
