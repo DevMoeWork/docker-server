@@ -1,0 +1,43 @@
+version: "3.8"
+services:
+    debian:
+        build:
+            context: "./configure/debian"
+            args:
+                WEB_USER_GID: ${WEB_USER_GID}
+                WEB_USER_UID: ${WEB_USER_UID}
+                WEB_USER_PASSWORD: ${WEB_USER_PASSWORD}
+        restart: "always"
+        ports:
+            - "80:80"
+            - "443:443"
+        environment:
+            - "TZ=Asia/Seoul"
+            - "DEBIAN_FRONTEND=noninteractive"
+        volumes:
+            - "./sources/web:/Application:rw"
+            - "./settings/vhosts/:/etc/apache2/sites-enabled/:ro"
+            - "./sources/default/:/var/www/html/:ro"
+            - "./settings/apache/apache2.conf:/etc/apache2/apache2.conf:ro"
+            - "./settings/apache/ports.conf:/etc/apache2/ports.conf:ro"
+            - "./settings/apache/conf-enabled/security.conf:/etc/apache2/conf-enabled/security.conf:ro"
+            - "./settings/php/php.ini:/etc/php/7.4/apache2/php.ini:ro"
+        depends_on:
+            - "mariadb"
+    mariadb:
+        build:
+            context: "./configure/mariadb"
+            args:
+                MYSQL_UID: ${MYSQL_UID}
+                MYSQL_GID: ${MYSQL_GID}
+        user: "${MYSQL_UID}:${MYSQL_GID}"
+        restart: "always"
+        ports:
+            - "3306:3306"
+        environment:
+            - "MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}"
+            - "MYSQL_DATABASE=${MYSQL_DATABASE}"
+            - "MYSQL_USER=${MYSQL_USER}"
+            - "MYSQL_PASSWORD=${MYSQL_PASSWORD}"
+        volumes:
+            - "./sources/mariadb:/var/lib/mysql:rw"
