@@ -3,7 +3,7 @@ apt-get install git
 curl -fsSL https://get.docker.com/ | sudo sh
 sudo usermod -aG docker $USER
 
-curl -L "https://github.com/docker/compose/releases/download/1.27.4/docker-compose-$(uname -s)-$(uname -m)" -o /usr/sbin/docker-compose
+curl -L "https://github.com/docker/compose/releases/download/v2.10.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/sbin/docker-compose
 chmod +x /usr/sbin/docker-compose
 
 service docker start
